@@ -1,13 +1,22 @@
 #!/bin/bash
 
+# Check for environment argument (dev or prod)
+if [ "$1" == "prod" ]; then
+    IMAGE_TAG="prod"
+    REPO="subburaman76/devops-app:prod"
+else
+    IMAGE_TAG="dev"
+    REPO="subburaman76/devops-app:dev"
+fi
+
 # Build the Docker image
-docker build -t your-dockerhub-username/devops-app:latest .
+docker build -t subburaman76/devops-app:latest .
 
 # Tag the image
-docker tag your-dockerhub-username/devops-app:latest your-dockerhub-username/devops-app:dev
+docker tag subburaman76/devops-app:latest $REPO
 
-# Push to Docker Hub (dev repo)
-docker push your-dockerhub-username/devops-app:dev
+# Push the image to Docker Hub
+docker push $REPO
 
-echo "Docker image pushed to dev repository on Docker Hub."
+echo "Docker image pushed to $IMAGE_TAG repository on Docker Hub."
 
