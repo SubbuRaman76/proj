@@ -1,23 +1,14 @@
 #!/bin/bash
 
-# Check for environment argument (dev or prod)
-if [ "$1" == "prod" ]; then
-    IMAGE_TAG="prod"
-    REPO="subburaman76/devops-app:prod"
-else
-    IMAGE_TAG="dev"
-    REPO="subburaman76/devops-app:dev"
-fi
-
 # Pull the latest image from Docker Hub
-docker pull $REPO
+docker pull subburaman76/devops-app-prod:latest
 
-# Stop and remove any existing containers if they exist
-docker stop devops-app 2>/dev/null || true
-docker rm devops-app 2>/dev/null || true
+# Stop and remove any existing containers
+docker stop devops-app-prod || true
+docker rm devops-app-prod || true
 
 # Run a new container with the latest image
-docker run -d --name devops-app -p 80:80 $REPO
+docker run -d --name devops-app-prod -p 80:80 subburaman76/devops-app-prod:latest
 
-echo "Application deployed in $IMAGE_TAG environment on port 80."
+echo "Application deployed successfully on port 80."
 
